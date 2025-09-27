@@ -17,7 +17,6 @@ public class bouncyBall : MonoBehaviour
     public Vector3 spawnLocationTrig;
     public bool readyRespawn;
     public int timer = 0;
-    private float launcherAlpha = 0;
     
     //declare player /launcher so that we can spawn it later
     public GameObject ballPrefab;
@@ -112,6 +111,15 @@ public class bouncyBall : MonoBehaviour
             myBody.linearVelocity = (Vector2)triggerCol.gameObject.transform.up * 19;
             myManager.AddScore();
         }
+
+        if (triggerCol.gameObject.tag == "honey")
+        {
+            if (Vector2.Dot(myBody.linearVelocity.normalized, Vector2.down) > 0)
+            {
+                myBody.linearDamping = 100f;
+            }
+            
+        }
     }
 
     void OnTriggerExit2D(Collider2D launcherCol)
@@ -121,6 +129,11 @@ public class bouncyBall : MonoBehaviour
             
             Destroy(launcherOutline);
             
+        }
+
+        if (launcherCol.gameObject.tag == "honey")
+        {
+            myBody.linearDamping = 0f;
         }
     }
     

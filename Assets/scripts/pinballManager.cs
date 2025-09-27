@@ -29,6 +29,7 @@ public class pinballManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         deathText.text = "Deaths: " + deaths.ToString();
         CheckDeath();
         if(readyToLoad && timer < 100)
@@ -50,6 +51,11 @@ public class pinballManager : MonoBehaviour
             PlayerPrefs.SetInt("deaths", deaths);
             PlayerPrefs.Save();
             SceneManager.LoadScene("Menu");
+        }
+
+        if (deaths > 4)
+        {
+            Time.timeScale = 0;
         }
     }
 
@@ -79,10 +85,10 @@ public class pinballManager : MonoBehaviour
     {
         
         //have a rat counter, if there are three rats (deaths) load scene
-        if (deaths >= 3)
+        if (deaths >= 5)
         {
             deathTimer++;
-            if (deathTimer > 300)
+            if (deathTimer > 100)
             {
                 resetVars = true;
                 //add to scene manager

@@ -19,6 +19,7 @@ public class PinballMenu : MonoBehaviour
 
     public void StartGame()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("SampleScene");
     }
     

@@ -16,6 +16,7 @@ TagManager:
   - changeDir
   - grapes
   - melon
+  - honey
   layers:
   - Default
   - TransparentFX
