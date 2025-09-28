@@ -100,26 +100,47 @@ public class bouncyBall : MonoBehaviour
     
     void OnTriggerEnter2D(Collider2D triggerCol)
     {
-        //change to switch statements
-        if (triggerCol.gameObject.tag == "deathBlock")
+        switch (triggerCol.gameObject.tag)
         {
-            readyRespawn = true;
+            case "deathBlock":
+                readyRespawn = true;
+                break;
+            case "changeDir":
+                myBody.linearVelocity = (Vector2)triggerCol.gameObject.transform.up * 10;
+                myManager.AddScore("1");
+                break;
+            case "honey":
+                if (myBody.linearVelocity.y < 0)
+                {
+                    myManager.AddScore("3");
+                    myBody.linearDamping = 30f;
+                }
+                break;
+            case "flipper":
+                if (myBody.linearVelocity.y < 0)
+                {
+                    myManager.AddScore("ultimate");
+                }
+                break;
+            case "grape":
+                myManager.AddScore("2");
+                break;
+            case "melon":
+                myManager.AddScore("1");
+                break;
+            case "pom":
+                myManager.AddScore("1");
+                break;
+                
+            default:
+                print("trigger enter function not working in the ball object");
+                break;
         }
+       
 
-        if (triggerCol.gameObject.tag == "changeDir")
-        {
-            myBody.linearVelocity = (Vector2)triggerCol.gameObject.transform.up * 19;
-            myManager.AddScore();
-        }
+        
 
-        if (triggerCol.gameObject.tag == "honey")
-        {
-            if (Vector2.Dot(myBody.linearVelocity.normalized, Vector2.down) > 0)
-            {
-                myBody.linearDamping = 100f;
-            }
-            
-        }
+        
     }
 
     void OnTriggerExit2D(Collider2D launcherCol)

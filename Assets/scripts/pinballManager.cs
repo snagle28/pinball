@@ -9,6 +9,7 @@ public class pinballManager : MonoBehaviour
     [SerializeField] TMP_Text scoreText;
     [SerializeField] TMP_Text deathText;
 
+    public string range;
     //why does this keep resetting?
     private int score = 0;
     private bool readyToLoad = false;
@@ -60,14 +61,37 @@ public class pinballManager : MonoBehaviour
     }
 
 
-    public void AddScore()
+    public void AddScore(string range)
     {
         //update score
         //call this funciton from the player
-        score += 100;
-        scoreText.text = "Score: " + score.ToString();
-        PlayerPrefs.SetInt("score", score);
-        PlayerPrefs.Save();
+        switch (range)
+        {
+            case "1":
+                score += 100;
+                scoreText.text = "Score: " + score.ToString();
+                PlayerPrefs.SetInt("score", score);
+                PlayerPrefs.Save();
+                break;
+            case "2":
+                score += 200;
+                scoreText.text = "Score: " + score.ToString();
+                PlayerPrefs.SetInt("score", score);
+                PlayerPrefs.Save();
+                break;
+            case "3":
+                score += 300;
+                scoreText.text = "Score: " + score.ToString();
+                PlayerPrefs.SetInt("score", score);
+                PlayerPrefs.Save();
+                break;
+            case "ultimate":
+                score += 500;
+                scoreText.text = "Score: " + score.ToString();
+                PlayerPrefs.SetInt("score", score);
+                PlayerPrefs.Save();
+                break;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -87,12 +111,10 @@ public class pinballManager : MonoBehaviour
         //have a rat counter, if there are three rats (deaths) load scene
         if (deaths >= 5)
         {
-            deathTimer++;
-            if (deathTimer > 100)
-            {
-                resetVars = true;
+           
+            resetVars = true;
                 //add to scene manager
-            }
+            
         }
     }
     

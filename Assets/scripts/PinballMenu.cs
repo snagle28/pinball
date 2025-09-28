@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PinballMenu : MonoBehaviour
 {
+
+    public UpdatedFade transitionAnimator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,8 +21,9 @@ public class PinballMenu : MonoBehaviour
 
     public void StartGame()
     {
-        Time.timeScale = 1;
-        SceneManager.LoadScene("SampleScene");
+        print("Starting game");
+        // Time.timeScale = 1;
+        transitionAnimator.FadeToLevel("SampleScene");
     }
-    
+
 }
