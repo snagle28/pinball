@@ -5,6 +5,10 @@ public class launcher : MonoBehaviour
     [SerializeField]
     private Rigidbody2D myBody;
     private bool readyLaunch = true;
+    private float force = 20;
+    private float forceMax = 30;
+    
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -29,24 +33,24 @@ public class launcher : MonoBehaviour
         switch (collision.gameObject.tag)
         {
             case "leftRamp":
-                myBody.AddForce(transform.right * -10);
+                myBody.AddForce(transform.right * -2);
                 break;
             case "rightRamp":
-                myBody.AddForce(transform.up * 10);
+                myBody.AddForce(transform.up * 2);
                 break;
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("accelerator"))
-        {
-            print("should acc");
-            myBody.AddForce(transform.up * 10);
-            
-            //won't launch again until it falls through, fix this later
-        }
-    }
+    // void OnTriggerEnter2D(Collider2D collision)
+    // {
+    //     if (collision.gameObject.CompareTag("accelerator"))
+    //     {
+    //         print("should acc");
+    //         myBody.AddForce(transform.up * 3);
+    //         
+    //         //won't launch again until it falls through, fix this later
+    //     }
+    // }
 
     void OnTriggerExit2D(Collider2D triggerCollider)
     {
@@ -67,18 +71,42 @@ public class launcher : MonoBehaviour
 
     void launchBall()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
-            myBody.bodyType = RigidbodyType2D.Dynamic;
-            if(Input.GetKeyDown(KeyCode.LeftArrow))
+            if (force < forceMax)
             {
-                myBody.AddForce(transform.right * -30, ForceMode2D.Impulse);
-            }
-            else if(Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                myBody.AddForce(transform.right * 30, ForceMode2D.Impulse);
+                force += 0.5f;
             }
         }
+            
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            if (force < forceMax)
+            {
+                force += 0.1f;
+            }
+        }
+            
         
+
+        if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            myBody.bodyType = RigidbodyType2D.Dynamic;
+
+            if(Input.GetKeyUp(KeyCode.RightArrow))
+            {
+                myBody.AddForce(transform.right * force, ForceMode2D.Impulse);
+                
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftArrow))
+            {
+                myBody.AddForce(transform.right * -force, ForceMode2D.Impulse);
+            }
+            
+        }
+
+        //force = 0f;
+
     }
 }

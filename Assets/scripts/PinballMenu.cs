@@ -26,4 +26,14 @@ public class PinballMenu : MonoBehaviour
         transitionAnimator.FadeToLevel("SampleScene");
     }
 
+    public void SeeOptions()
+    {
+        transitionAnimator.FadeToLevel("HowToPlay");
+    }
+
+    public void GoBack()
+    {
+        transitionAnimator.FadeToLevel("Menu");
+    }
+
 }
